@@ -1,6 +1,6 @@
 import React from "react";
 import "./Login.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 import { useContext } from 'react';
@@ -12,9 +12,15 @@ const Login = () => {
     email: "",
     password: "",
   });
-
-  //const [user, setUser] = useContext(UserContext);
   const navigate = useNavigate();
+  const user  = useContext(UserContext);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (!loading) {
+      navigate('/events');
+    }
+  }, [loading]);
 
   function handleClick() {
     axios.post('http://localhost:5000/user/validate-email', {email:formData.email})
@@ -52,16 +58,22 @@ const Login = () => {
         formData,
         { withCredentials: true }
       )
-      .then(function (response) {
+      .then(async function (response) {
         setsubmissionResults("Login Successful");
         console.log(response);
-        //navigate('/events');
+        localStorage.setItem('loggedIn', true);
+        
       })
       .catch(function (error) {
         setsubmissionResults(error.response.data.error);
         console.log(error.response.data.error);
         console.log(error);
+      }).finally(function(){
+        setLoading(false);
       });
+      
+
+      
   };
 
   const onLogin = () => {};
