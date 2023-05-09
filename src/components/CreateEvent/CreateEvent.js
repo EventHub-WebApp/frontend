@@ -4,6 +4,7 @@ import "./CreateEvent.css";
 import axios from 'axios';
 import { useContext } from 'react';
 import { UserContext } from '../../Providers/UserProvider';
+import LogoutButton from "../Logout/Logout";
 
 const CreateEvent = () => {
 //   const [step, setStep] = useState(1);
@@ -76,6 +77,7 @@ console.log(user);
           </div>
            <h1>{user.email}</h1>  
            <h1>hi</h1>
+           <LogoutButton/>
         </div>
     </section>
   )
