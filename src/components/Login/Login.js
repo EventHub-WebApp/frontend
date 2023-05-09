@@ -13,14 +13,13 @@ const Login = () => {
     password: "",
   });
   const navigate = useNavigate();
-  const user  = useContext(UserContext);
   const [loading, setLoading] = useState(true);
+  const { user, setUser } = useContext(UserContext);
 
-  useEffect(() => {
-    if (!loading) {
-      navigate('/events');
-    }
-  }, [loading]);
+
+
+
+
 
   function handleClick() {
     axios.post('http://localhost:5000/user/validate-email', {email:formData.email})
@@ -52,6 +51,12 @@ const Login = () => {
     });
   };
 
+
+  useEffect(()=>{
+    if(!loading){
+      navigate('/events');
+    }
+  },[loading])
   const handleSubmit = async (e) => {
     e.preventDefault();
     axios.post('http://localhost:5000/user/login', 
@@ -61,16 +66,20 @@ const Login = () => {
       .then(async function (response) {
         setsubmissionResults("Login Successful");
         console.log(response);
+        console.log("hiiii");
         localStorage.setItem('loggedIn', true);
+        localStorage.setItem('user', JSON.stringify(response.data));
+        setLoading(false);
+        setUser(response.data);
+        navigate('/events');
+
         
       })
       .catch(function (error) {
         setsubmissionResults(error.response.data.error);
         console.log(error.response.data.error);
         console.log(error);
-      }).finally(function(){
-        setLoading(false);
-      });
+      })
       
 
       

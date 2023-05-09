@@ -32,7 +32,6 @@ console.log(user);
       )
       .then(function (response) {
         console.log(response);
-        navigate('/events');
       })
       .catch(function (error) {
         console.log(error.response.data.error);
