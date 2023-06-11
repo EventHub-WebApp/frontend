@@ -1,21 +1,20 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./CreateEvent.css";
 import axios from 'axios';
-import { useContext } from 'react';
-import { UserContext } from '../../Providers/UserProvider';
-import LogoutButton from "../Logout/Logout";
 
 const CreateEvent = () => {
-//   const [step, setStep] = useState(1);
-//const  user  = useContext(UserContext)[0];
-const {user}  = useContext(UserContext);
-console.log(user);
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: "",
     short_description: "",
     description: "",
+    bannerURL: "",
+    location: "",
+    start_date: "",
+    end_date: "",
+    category: "",
+    price: ""
   });
 
   const handleChange = (e) => {
@@ -27,12 +26,13 @@ console.log(user);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    axios.post('http://localhost:5000/todos/create-event', 
+    axios.post(process.env.REACT_APP_BASE_URL+'/todos/create-event', 
         formData,
         { withCredentials: true }
       )
       .then(function (response) {
         console.log(response);
+        navigate('/');
       })
       .catch(function (error) {
         console.log(error.response.data.error);
@@ -70,18 +70,61 @@ console.log(user);
               placeholder="Describe your event in details"
               value={formData.description}
             />
+            <input
+              onChange={handleChange}
+              type="text"
+              name="bannerURL"
+              placeholder="Banner URL"
+              value={formData.bannerURL}
+            />
+            <input
+              onChange={handleChange}
+              type="text"
+              name="location"
+              placeholder="Location"
+              value={formData.location}
+            />
+            <input
+              onChange={handleChange}
+              type="datetime-local"
+              name="start_date"
+              placeholder="Start Date"
+              value={formData.start_date}
+            />
+            <input
+              onChange={handleChange}
+              type="datetime-local"
+              name="end_date"
+              placeholder="End Date"
+              value={formData.end_date}
+            />
+            <select
+              onChange={handleChange}
+              name="category"
+              value={formData.category}
+            >
+              <option value="">-- Select a Category --</option>
+              <option value="Music">Music</option>
+              <option value="Sports">Sports</option>
+              <option value="Arts & Theater">Arts & Theater</option>
+              <option value="Food & Drink">Food & Drink</option>
+              <option value="Others">Others</option>
+            </select>
+            <input
+              onChange={handleChange}
+              type="number"
+              name="price"
+              placeholder="Price"
+              value={formData.price}
+            />
           </div>
+          <button type="submit" className="btn btn-primary">
+            Create Event
+          </button>
         </form>
-          <div className="btn btn-primary" onClick={handleSubmit}>
-            Submit
-          </div>
-           <h1>{user.email}</h1>  
-           <h1>hi</h1>
-           <LogoutButton/>
-        </div>
+      </div>
     </section>
   )
-  
 };
 
 export default CreateEvent;
