@@ -10,7 +10,7 @@ import EventsPage from "./components/Marketplace/Marketplace";
 import LogoutButton from "./components/Logout/Logout";
 import Navbar from "./components/Navbar/Navbar";
 import isLoggedIn from "./components/auth";
-import CreatedEventsPage from "./CreatedEvents/CreatedEvents";
+import CreatedEventsPage from "./components/CreatedEvents/CreatedEvents";
 import EventPage from "./components/EventPage/EventPage";
 import MyTickets from "./components/MyTickets/MyTickets";
 import Ticket from "./components/Ticket/Ticket";
