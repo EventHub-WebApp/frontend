@@ -10,7 +10,7 @@ const ValidateEmail = () => {
     const value = location.state;
     function handleClick() {
         console.log(value);
-        axios.post('http://localhost:5000/user/validate-email', value)
+        axios.post(process.env.REACT_APP_BASE_URL+'/user/validate-email', value)
         .then(function(response){
             console.log(response);
         })
