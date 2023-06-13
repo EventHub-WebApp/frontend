@@ -6,7 +6,7 @@ import { UserContext } from '../Providers/UserProvider';
 import { Link } from 'react-router-dom';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import EventCard from '../components/EventCard/EventCard';
+import EventCard from '../EventCard/EventCard';
 
 
 
