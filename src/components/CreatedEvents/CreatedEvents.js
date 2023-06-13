@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import "./CreatedEvents.css";
 import { useContext } from 'react';
-import { UserContext } from '../Providers/UserProvider';
+import { UserContext } from '../../Providers/UserProvider';
 import { Link } from 'react-router-dom';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
