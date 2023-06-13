@@ -4,12 +4,11 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 
-
 const Signup = () => {
-  const [submissionResults, setsubmissionResults] = useState("Sign up to continue");
+  const [submissionResults, setSubmissionResults] = useState("Sign up to continue");
   const [formData, setFormData] = useState({
-    // first_name: "",
-    // last_name: "",
+    name: "",
+    surname: "",
     email: "",
     password: "",
   });
@@ -26,71 +25,70 @@ const Signup = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    axios.post('http://localhost:5000/user/signup', 
-        formData
-      )
+    axios.post(process.env.REACT_APP_BASE_URL+'/user/signup', formData)
       .then(function (response) {
-        setsubmissionResults("Signup Successful. Please Verify Your Email");
+        setSubmissionResults("Signup Successful. Please Verify Your Email");
         console.log(response.data.email);
-        return axios.post('http://localhost:5000/user/validate-email', {email:formData.email});
+        return axios.post(process.env.REACT_APP_BASE_URL+'/user/validate-email', {email: formData.email});
       }).then(function(response){
-        navigate('/validate-email', {state: {email:formData.email}});
+        navigate('/validate-email', {state: {email: formData.email}});
       }).catch(function(error){
-        setsubmissionResults(error.response.data.error);
+        setSubmissionResults(error.response.data.error);
         console.log(error.response.data.error);
       });
   };
+
   return (
-    <div className="container row">
-      {/* <div className="logo__container">
+    <div className="signup-container">
+      {/* <div className="logo-container">
         <img src={EveMarkBanner} alt="Logo" />
       </div> */}
-      <div className="login__container">
-        <form className="login__form" onSubmit={handleSubmit}>
+      <div className="signup-form-container">
+        <form className="signup-form" onSubmit={handleSubmit}>
           <h1>Sign Up</h1>
           <div className="credentials">
-            {/* <div className="fullname">
+            <div className="fullname">
               <input
-                type={"text"}
-                name="first_name"
+                type="text"
+                name="name"
                 placeholder="John"
-                value={formData.first_name}
+                value={formData.name}
                 onChange={handleChange}
-              ></input>
+              />
               <input
-                type={"text"}
-                name="last_name"
+                type="text"
+                name="surname"
                 placeholder="Cena"
-                value={formData.last_name}
+                value={formData.surname}
                 onChange={handleChange}
-              ></input>
-            </div> */}
+              />
+            </div>
             <input
-              type={"email"}
+              type="email"
               name="email"
               placeholder="youremail@mail.com"
               value={formData.email}
               onChange={handleChange}
-            ></input>
+            />
             <input
-              type={"password"}
+              type="password"
               name="password"
               placeholder="Your Password"
               value={formData.password}
               onChange={handleChange}
-            ></input>
+            />
           </div>
+          <div className="submission-results"><h5>{submissionResults}</h5> </div>
           <div className="submission">
             <button className="btn btn-primary" type="submit">
               Sign Up
             </button>
-
-            <h5>{submissionResults}</h5>
+            
           </div>
         </form>
       </div>
-      <div className="other__options">
-        <a href="/">Already have an account ?</a>
+      <div className="other-options">
+        <a href="/login">Already have an account?</a>
       </div>
     </div>
   );

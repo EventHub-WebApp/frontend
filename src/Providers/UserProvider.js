@@ -1,3 +1,13 @@
+/* This code is creating a React context called `UserContext` and a provider component called
+`UserProvider`. The `UserProvider` component sets up state using the `useState` hook to keep track
+of the current user and whether the component is still loading. It also uses the `useEffect` hook to
+check if there is a stored user in local storage and load the current user if there isn't. The
+`loadCurrentUser` function makes an API call to get the current user and sets the user state
+accordingly. The `checkCookie` function checks if a cookie with a given name exists. The
+`UserContext.Provider` component provides the `user` and `setUser` values to any child components
+that need them. Finally, the `UserProvider` component is exported along with the `UserContext`. */
+
+
 import { createContext, useState, useEffect } from 'react';
 import axios from 'axios';
 
@@ -12,11 +22,10 @@ const UserProvider = ({ children }) => {
 
   function checkCookie(cookieName) {
     const cookies = document.cookie.split(';');
-
+    if (cookies.length === 0) return false;
+    
     for (let i = 0; i < cookies.length; i++) {
       const cookie = cookies[i].trim();
-
-      // Check if the cookie name matches
       if (cookie.startsWith(`${cookieName}=`)) {
         return true;
       }
@@ -41,7 +50,7 @@ const UserProvider = ({ children }) => {
   const loadCurrentUser = async () => {
     try {
       if(checkCookie("access-token")){
-        const response = await axios.get("http://localhost:5000/user/current-user", {
+        const response = await axios.get(process.env.REACT_APP_BASE_URL+"/user/current-user", {
           withCredentials: true,
         });
         
