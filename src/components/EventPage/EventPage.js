@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import "./EventPage.css";
 import { UserContext } from "../../Providers/UserProvider";
+import isLoggedIn from "../auth";
 
 const EventPage = () => {
   const { eventId } = useParams();
@@ -26,6 +27,7 @@ const EventPage = () => {
   }, [eventId]);
 
   const handleBuyTicketClick = () => {
+    if(isLoggedIn()){
     const userId = user._id; 
     axios
       .post(
@@ -42,6 +44,11 @@ const EventPage = () => {
         alert("Payment failed! "+ err.response.data.error);
         console.log(err);
       });
+      
+    }
+    else{
+      alert("Please login to buy tickets")
+    }
   };
 
   if (isLoading) {
