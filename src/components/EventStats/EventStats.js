@@ -13,7 +13,7 @@ const EventStatsPage = () => {
     const fetchEvent = async () => {
       try {
         const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/events/${eventId}`);
-        setEvent(response.data);
+        setEvent(response.data.event);
         setIsLoading(false);
       } catch (error) {
         console.error('Failed to fetch event:', error);

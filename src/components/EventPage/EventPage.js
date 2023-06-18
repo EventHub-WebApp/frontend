@@ -16,7 +16,7 @@ const EventPage = () => {
     axios
       .get(process.env.REACT_APP_BASE_URL+`/events/${eventId}`)
       .then((res) => {
-        setEvent(res.data);
+        setEvent(res.data.event);
         setIsLoading(false);
       })
       .catch((err) => {

@@ -9,10 +9,10 @@ function EventsPage() {
   const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
-    console.log(process.env.REACT_APP_BASE_URL)
     axios.get(process.env.REACT_APP_BASE_URL+"/events")
       .then(response => {
-        setEvents(response.data);
+        setEvents(response.data.events);
+        console.log(response.data);
       })
       .catch(error => {
         console.log(error);
